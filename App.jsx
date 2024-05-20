@@ -6,6 +6,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import IndukAyam from "./Pages/Induk-ayam";
+import State from "./Pages/State";
 
 // function App() {
 //   const [count, setCount] = useState(0)
@@ -43,6 +44,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/IndukAyam" element={<IndukAyam/>}/>
+      <Route path="/State" element={<State/>}/>
     </Routes>
    );
 }
