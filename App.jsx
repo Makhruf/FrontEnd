@@ -7,6 +7,13 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import IndukAyam from "./Pages/Induk-ayam";
 import State from "./Pages/State";
+import EventHandling from "./Pages/EventHandling";
+import UseEffect from "./Pages/UseEffect";
+import UpdateState from "./component/UpdateState";
+import Animasi from "./component/Animasi";
+import FetchApi from "./component/FetchApi";
+import { MyContext } from "./Pages/MyContext";
+import ReactContext from "./Pages/ReactContext";
 
 // function App() {
 //   const [count, setCount] = useState(0)
@@ -45,6 +52,12 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/IndukAyam" element={<IndukAyam/>}/>
       <Route path="/State" element={<State/>}/>
+      <Route path="/EventHandling" element={<EventHandling/>}/>
+      <Route path="/UseEffect" element={<UseEffect/>}/>
+      <Route path="/UpdateState" element={<UpdateState/>}/>
+      <Route path="/Animasi" element={<Animasi/>}/>
+      <Route path="/FetchApi" element={<FetchApi/>}/>
+      <Route path="/ReactContext" element={<ReactContext/>}/>
     </Routes>
    );
 }
