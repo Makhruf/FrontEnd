@@ -2,15 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import Utama from './component/Utama.jsx'
-import IndukAyam from './Pages/Induk-ayam.jsx'
-import Belajar from './Belajar.jsx'
-import Navbar from './component/Navbar.jsx'
-import Sidebar from './component/Sidebar.jsx'
-import Layout from './component/Layout.jsx'
-import Home from './Pages/Home.jsx'
-import Button from './component/Button.jsx'
+// import Utama from './component/Utama.jsx'
+// import IndukAyam from './Pages/Induk-ayam.jsx'
+// import Belajar from './Belajar.jsx'
+// import Navbar from './component/Navbar.jsx'
+// import Sidebar from './component/Sidebar.jsx'
+// import Layout from './component/Layout.jsx'
+// import Home from './Pages/Home.jsx'
+// import Button from './component/Button.jsx'
 import { BrowserRouter } from 'react-router-dom'
+import GetMahasiswa from './component/admin/GetMahasiswa.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -25,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     {/* <Button/> */}
 
     <BrowserRouter>
-      <App/>
+      <GetMahasiswa/>
     </BrowserRouter>
   </React.StrictMode>,
 )
