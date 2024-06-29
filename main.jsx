@@ -26,7 +26,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     {/* <Button/> */}
 
     <BrowserRouter>
-      <GetMahasiswa/>
+      {/* <GetMahasiswa/> */}
+      <App/>
     </BrowserRouter>
   </React.StrictMode>,
 )

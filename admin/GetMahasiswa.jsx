@@ -1,32 +1,49 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import apis from "../../api/mahasiswa";
+import CreateMahasiswa from "./CreateMahasiswa";
 
 const GetMahasiswa = () => {
-    const [mahasiswa, setMahasiswa] = useState([])
-    const [error, setError] = useState(null)
-    const [nim, setNim] = useState('')
+    const [mahasiswa, setMahasiswa] = useState([]);
+    const [error, setError] = useState(null);
+    const [nim, setNim] = useState('');
+    const [updateMahasiswa, setUpdateMahasiswa] = useState(null);
+    const [isOpenUpdate, setIsOpenUpdate] = useState(false);
 
-    useEffect(() =>{
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 let response = await apis.getAllMahasiswa();
-                if (nim){
+                if (nim) {
                     response = await apis.getMahasiswaByNim(nim);
                 }
-
-                setMahasiswa( response.data);
-            } catch(error) {
+                setMahasiswa(response.data);
+            } catch (error) {
                 setError(error.message);
             }
         };
         fetchData();
-    },{nim});
-    
-    if(error){
-        return <div>error:{error}</div>
-    }
-    return ( 
+    }, [nim]);
+
+    const handleOpenUpdate = (mhs) => {
+        setUpdateMahasiswa(mhs);
+        setIsOpenUpdate(true);
+    };
+
+    const handleCloseUpdate = () => {
+        setIsOpenUpdate(false);
+        setUpdateMahasiswa(null);
+    };
+
+    const handleDelete = async (nim) => {
+        try {
+            await apis.deleteMahasiswa(nim);
+            setMahasiswa(mahasiswa.filter(mhs => mhs.nim !== nim));
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    return (
         <>
             <div className="flex flex-row justify-between">
                 <h1 className="text-2xl font-bold mt-2">Daftar Mahasiswa</h1>
@@ -35,22 +52,23 @@ const GetMahasiswa = () => {
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
-                            stroke="currentCOlor" viewBox="0 0 24 24"
-                            xmlns="https://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6 6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6 6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         </div>
                         <input type="search" value={nim} className="block w-full p-4 pl-10 text-sm text-gray-900 border
                              border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500
                               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Cari NIM" onChange={(e)=> {setNim(e.target.value)}}/>
+                            placeholder="Cari NIM" onChange={(e)=> setNim(e.target.value)} />
                         <button className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800
                                 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2
                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-                        onClick={() => {setNim(nim)}}>Search</button>
+                        onClick={() => setNim(nim)}>Search</button>
                     </div>
                 </div>
             </div>
-   <        table className="min-w-full divide-y divide-gray-200 mt-4">
+            {error && <div className="text-red-500 mt-2">{error}</div>}
+            <table className="min-w-full divide-y divide-gray-200 mt-4">
                 <thead className="bg-gray-800">
                     <tr>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
@@ -65,6 +83,9 @@ const GetMahasiswa = () => {
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                             PRODI
                         </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                            Actions
+                        </th>
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -74,10 +95,29 @@ const GetMahasiswa = () => {
                             <td className="px-6 py-4 whitespace-nowrap">{mhs.nama}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{mhs.angkatan}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{mhs.prodi}</td>
+                            <td className="px-6 py-4 whitespace-nowrap flex space-x-2">
+                                <button
+                                    onClick={() => handleOpenUpdate(mhs)}
+                                    className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+                                >
+                                    Update
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(mhs.nim)}
+                                    className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded"
+                                >
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            {isOpenUpdate && (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+                    <CreateMahasiswa mhs={updateMahasiswa} onClose={handleCloseUpdate} />
+                </div>
+            )}
         </>
     );
 };
