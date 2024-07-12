@@ -13,8 +13,9 @@ const routerUser = require('./routes/user')
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors({
-    origin: '*'
-}))
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
 app.use(session({
     secret: 'secret-key',
     resave: false,
