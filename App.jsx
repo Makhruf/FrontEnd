@@ -8,13 +8,16 @@ import UpdateState from "./component/UpdateState";
 import Animasi from "./component/Animasi";
 import FetchApi from "./component/FetchApi";
 import ReactContext from "./Pages/ReactContext";
-import CreateMahasiswa from "./component/admin/CreateMahasiswa";
 import GetMahasiswa from "./component/admin/GetMahasiswa";
+import CreateMahasiswa from "./component/admin/CreateMahasiswa";
+import Login from "./component/auth/Login";
+import Register from "./component/auth/Register";
+import NotLogin from "./component/auth/NotLogin";
 
 function App() {
   return ( 
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Login/>} />
       <Route path="/IndukAyam" element={<IndukAyam />} />
       <Route path="/State" element={<State />} />
       <Route path="/EventHandling" element={<EventHandling />} />
@@ -23,9 +26,10 @@ function App() {
       <Route path="/Animasi" element={<Animasi />} />
       <Route path="/FetchApi" element={<FetchApi />} />
       <Route path="/ReactContext" element={<ReactContext />} />
-      <Route path="/GetMahasiswa" element={<GetMahasiswa/>} />
-      <Route path="/Tambah" element={<CreateMahasiswa/>} />
-
+      <Route path="/admin/datamahasiswa" element={<GetMahasiswa />} />
+      <Route path="/Tambah" element={<CreateMahasiswa />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/notlogin" element={<NotLogin />} />
     </Routes>
   );
 }
